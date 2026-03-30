@@ -31,11 +31,13 @@ openai.api_key = ''  # Replace with your actual OpenAI API key
 """Cell 3: Download YouTube Video function"""
 
 def download_video(url, filename):
-    yt = YouTube(url)
-    video = yt.streams.filter(file_extension='mp4').first()
-
-    # Download the video
-    video.download(filename=filename)
+    import subprocess
+    subprocess.run(
+        ["yt-dlp", "-f", "mp4", "-o", filename, url],
+        check=True,
+        capture_output=True,
+        text=True
+    )
 
 
 #Segment Video function
