@@ -32,12 +32,16 @@ openai.api_key = ''  # Replace with your actual OpenAI API key
 
 def download_video(url, filename):
     import subprocess
-    subprocess.run(
+    result = subprocess.run(
         ["yt-dlp", "-f", "mp4", "-o", filename, url],
-        check=True,
         capture_output=True,
         text=True
     )
+    print("✅ yt-dlp 输出日志：")
+    print(result.stdout)
+    if result.stderr:
+        print("❌ yt-dlp 错误日志：")
+        print(result.stderr)
 
 
 #Segment Video function
