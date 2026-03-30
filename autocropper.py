@@ -30,16 +30,18 @@ openai.api_key = ''  # Replace with your actual OpenAI API key
 
 """Cell 3: Download YouTube Video function"""
 
-def get_transcript(video_id):
-    try:
-        from youtube_transcript_api import YouTubeTranscriptApi
-        transcript = YouTubeTranscriptApi.get_transcript(video_id)
-        print("✅ 字幕提取成功")
-        return transcript
-    except Exception as e:
-        print(f"❌ 字幕提取失败: {e}")
-        # 返回空列表，让脚本继续运行
-        return []
+def download_video(url, filename):
+    import subprocess
+    result = subprocess.run(
+        ["yt-dlp", "-f", "mp4", "-o", filename, url],
+        capture_output=True,
+        text=True
+    )
+    print("✅ yt-dlp 输出日志：")
+    print(result.stdout)
+    if result.stderr:
+        print("❌ yt-dlp 错误日志：")
+        print(result.stderr)
 
 
 #Segment Video function
